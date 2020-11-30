@@ -8,15 +8,31 @@ pipeline{
 				}
 			}
 			stage('deploy'){
+				tools{
+					maven 'maven 3.6.3'
+				}
 				steps{
 					sh "mvn package"
 					echo 'Continous Deploy to QA'
 				}
 			}
-			stage('test'){
-				steps{
-					echo 'Continous Testing'
+			stage('Test'){
+				agent{
+					docker{
+						image 'ubuntu'
+					}	
 				}
+				steps{
+					echo "Continous Testing"
+				}
+			}
+		}
+		post{
+			success{
+				echo 'success'
+			}
+			failure{
+				echo 'failure'
 			}
 		}
 }	
