@@ -1,5 +1,5 @@
 pipeline{
-	agent any
+	agent none
 		stages{
 			stage('build'){
 				steps{
@@ -8,9 +8,6 @@ pipeline{
 				}
 			}
 			stage('deploy'){
-				tools{
-					maven 'maven 3.6.3'
-				}
 				steps{
 					sh "mvn package"
 					echo 'Continous Deploy to QA'
@@ -18,9 +15,7 @@ pipeline{
 			}
 			stage('Test'){
 				agent{
-					docker{
-						image 'ubuntu'
-					}	
+					docker{image 'ubuntu'}	
 				}
 				steps{
 					echo "Continous Testing"
