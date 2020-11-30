@@ -2,6 +2,7 @@ pipeline{
 	agent any
 		stages{
 			stage('build'){
+				git "https://github.com/ps442277/DevJava.git"
 				steps{
 					echo 'Continuous Build'
 				}
