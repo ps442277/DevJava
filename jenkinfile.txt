@@ -1,0 +1,15 @@
+pipeline{
+	agent any{
+		stages{
+			stage('build'){
+				echo 'Continuous Build'
+			}
+			stage('deploy'){
+				echo 'Continous Deploy to QA'
+			}
+			stage('test'){
+				echo 'Continous Testing'
+			}
+		}
+	}
+}	
