@@ -2,13 +2,19 @@ pipeline{
 	agent any
 		stages{
 			stage('build'){
-				echo 'Continuous Build'
+				steps{
+					echo 'Continuous Build'
+				}
 			}
 			stage('deploy'){
-				echo 'Continous Deploy to QA'
+				steps{
+					echo 'Continous Deploy to QA'
+				}
 			}
 			stage('test'){
-				echo 'Continous Testing'
+				steps{
+					echo 'Continous Testing'
+				}
 			}
 		}
 }	
