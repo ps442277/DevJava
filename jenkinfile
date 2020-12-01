@@ -1,33 +1,47 @@
 pipeline{
 	agent any
 		stages{
-			stage('build'){
+			stage('Continuous Download'){
 				steps{
-					git "https://github.com/ps442277/DevJava.git"
-					echo 'Continuous Build'
+					script{
+						try{
+							git "https://github.com/ps442277/DevJava.git"
+							echo 'Continuous Download'
+						}
+						catch(Exception e){
+							mail bcc: '', body:'Unable to download code from git',cc:'',from:'', replyTo:'',subject:'Download failure',to:'demo@gmail.com'
+							exit(1)
+						}
+					}
 				}
 			}
-			stage('deploy'){
+			stage('Continuous Build'){
 				steps{
-					sh "mvn package"
-					echo 'Continous Deploy to QA'
+					script{
+						try{	
+							sh "mvn package"
+							echo 'Continous Build and package'
+						}
+						catch(Exception e){
+							mail bcc: '', body:'Unable to build and package code',cc:'',from:'', replyTo:'',subject:'Build failure',to:'demo@gmail.com'
+							exit(1)
+						}
+					}
 				}
 			}
-			stage('Test'){
-				agent{
-					docker{image 'ubuntu'}	
-				}
+			stage('Continuous Deploy'){
 				steps{
-					echo "Continous Testing"
+					script{
+						try{	
+							sh label:'',script:'scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war ubundu@172.31.11.50:/var/lib/tomcat9/webapps/testwebapp.war
+							echo 'Continous Deploy to QA'
+						}
+						catch(Exception e){
+							mail bcc: '', body:'Deployment to QA failed',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'demo@gmail.com'
+							exit(1)
+						}
+					}
 				}
-			}
-		}
-		post{
-			success{
-				echo 'success'
-			}
-			failure{
-				echo 'failure'
 			}
 		}
 }	
