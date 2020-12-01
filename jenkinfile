@@ -33,7 +33,7 @@ pipeline{
 				steps{
 					sshagent(['tomcat-new']) {
 						sh """
-							scp -o StrictHostKeyChecking=no /home/ubuntu/.jenkins/workspace/pipeline-proj1/webapp/target/webapp.war ubuntu@ip-172-31-10-234:/var/lib/tomcat8/webapps/
+							scp -o StrictHostKeyChecking=no /home/ubuntu/.jenkins/workspace/pipeline-proj1/webapp/target/webapp.war ubuntu@ip-172-31-10-234:/var/lib/tomcat9/webapps/
 							
 							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 stop
 							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 start
