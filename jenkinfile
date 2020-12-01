@@ -31,16 +31,15 @@ pipeline{
 			}
 			stage('Continuous Deploy'){
 				steps{
-					script{
-						try{	
-							sh label: '', script: 'scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war praveen@172.31.11.50:/var/lib/tomcat9/webapps/testwebapp.war'
-							echo 'Continous Deploy to QA'
-						}
-						catch(Exception e){
-							mail bcc: '', body:'Deployment to QA server failure',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'praveenselvaraj.ps@gmail.com'
-							echo 'Failed deplying to QA'
-							exit(1)
-						}
+					sshagent(['tomcat-new']) {
+						sh """
+							scp -o StrictHostKeyChecking=no target/webapp.war ubuntu@ip-172-31-10-234:/var/lib/tomcat8/webapps/
+							
+							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 stop
+							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 start
+
+						
+						"""
 					}
 				}
 			}
