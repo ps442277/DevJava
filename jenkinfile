@@ -1,3 +1,4 @@
+currentBuild.displayName = "Amazon#"+currentBuild.number
 pipeline{
 	agent any
 		stages{
@@ -38,7 +39,7 @@ pipeline{
 							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 start
 						"""
 					}
-					echo 'Continuous Deploy to QA server'
+					echo 'Continuous Deploy to QA server	'
 				}
 			}
 			stage('Continuous Test'){
