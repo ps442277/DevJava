@@ -37,7 +37,7 @@ pipeline{
 							echo 'Continous Deploy to QA'
 						}
 						catch(Exception e){
-							mail bcc: '', body:'Deployment to QA failed',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'demo@gmail.com'
+							mail bcc: '', body:'Deployment to QA server failed',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'demo@gmail.com'
 							exit(1)
 						}
 					}
