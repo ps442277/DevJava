@@ -34,13 +34,18 @@ pipeline{
 					sshagent(['tomcat-new']) {
 						sh """
 							scp -o StrictHostKeyChecking=no /home/ubuntu/.jenkins/workspace/pipeline-proj1/webapp/target/webapp.war ubuntu@ip-172-31-10-234:/var/lib/tomcat9/webapps/
-							
 							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 stop
 							ssh ubuntu@ip-172-31-10-234 sudo service tomcat9 start
-
-						
 						"""
 					}
+					echo 'Continuous Deploy to QA server'
+				}
+			}
+			stage('Continuous Test'){
+				steps{
+					git "https://github.com/ps442277/FunctionalTest.git"
+					sh 'java -jar /home/ubuntu/.jenkins/workspace/Testing/testing.jar'
+					echo 'Continuous Testing passed'
 				}
 			}
 		}
