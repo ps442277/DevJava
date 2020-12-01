@@ -33,12 +33,13 @@ pipeline{
 				steps{
 					script{
 						try{	
-							sh label:'',script:'scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war ubundu@172.31.11.50:/var/lib/tomcat9/webapps/testwebapp.war'
+							sh label:'',script:'scp /home/ubuntu/.jenkins/workspace/Development/webapp/target/webapp.war ubuntu@172.31.11.50:/var/lib/tomcat9/webapps/testwebapp.war'
 							echo 'Continous Deploy to QA'
 						}
 						catch(Exception e){
-							mail bcc: '', body:'Deployment to QA server failure',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'demo@gmail.com'
-							exit(1)
+							#mail bcc: '', body:'Deployment to QA server failure',cc:'',from:'', replyTo:'',subject:'Deployment failure',to:'demo@gmail.com'
+							#exit(1)
+							echo 'Failed deplying to QA'
 						}
 					}
 				}
