@@ -27,7 +27,7 @@ pipeline{
 							mail bcc: '', body:'Unable to build and package code',cc:'',from:'', replyTo:'',subject:'Build failure',to:'demo@gmail.com'
 							exit(1)
 						}
-					}
+					}	
 				}
 			}
 			stage('Continuous Deploy'){
@@ -43,7 +43,7 @@ pipeline{
 				}
 			}
 			stage('Continuous Test'){
-				steps{
+				steps{			
 					git "https://github.com/ps442277/FunctionalTest.git"
 					sh 'java -jar /home/ubuntu/.jenkins/workspace/Testing/testing.jar'
 					echo 'Continuous Testing passed'
